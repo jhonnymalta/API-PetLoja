@@ -24,12 +24,13 @@ public class UserController : ControllerBase
         return context.Usuarios;
     }
     [HttpGet("/{id:int}")]
-    public User GetUserByID(
+    public IActionResult GetUserByID(
         [FromHeader] int id,
         [FromServices] AppDbContext context
     )
     {
-        return context.Usuarios.FirstOrDefault(x => x.Id == id);
+        var model = context.Usuarios.FirstOrDefault(x => x.Id == id);
+        return Ok(model);
 
     }
 
@@ -45,7 +46,7 @@ public class UserController : ControllerBase
 
     }
     [HttpPut("/{id:int}")]
-    public User UserPut(
+    public IActionResult UserPut(
         [FromRoute] int id,
         [FromBody] User user,
         [FromServices] AppDbContext context
@@ -54,20 +55,20 @@ public class UserController : ControllerBase
         var model = context.Usuarios.FirstOrDefault(x => x.Id == id);
         if (model == null)
         {
-            return user;
+            return NotFound();
         }
         model.Name = user.Name;
         model.Email = user.Email;
 
         context.Usuarios.Update(model);
         context.SaveChanges();
-        return model;
+        return Ok(model);
 
 
     }
 
     [HttpDelete("/{id:int}")]
-    public User Delete(
+    public IActionResult Delete(
         [FromRoute] int id,
         [FromServices] AppDbContext context
     )
@@ -75,7 +76,7 @@ public class UserController : ControllerBase
         var model = context.Usuarios.FirstOrDefault(x => x.Id == id);
         context.Usuarios.Remove(model);
         context.SaveChanges();
-        return model;
+        return Ok(model);
     }
 
 
