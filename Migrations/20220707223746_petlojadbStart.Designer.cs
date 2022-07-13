@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace PetLoja_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220704232950_ChangeDbConection")]
-    partial class ChangeDbConection
+    [Migration("20220707223746_petlojadbStart")]
+    partial class petlojadbStart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
